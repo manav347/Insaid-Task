@@ -12,6 +12,7 @@ const App=()=> {
   const {productItems}=data;
   const [ cartItems,setCartItems ]=useState([]);
 
+  // Add item function
   const handleAddProduct =(product)=>{
     const ProductExist = cartItems.find((item)=>item.id=== product.id)
     if(ProductExist){
@@ -23,16 +24,18 @@ const App=()=> {
     }
   };
 
+  // Remove item function
   const handleRemoveProduct = (product)=>{
     const ProductExist = cartItems.find((item)=>item.id=== product.id)
-    if (ProductExist.quantity === 1){
-      setCartItems(cartItems.filter((item)=> item.id !== product.id));
+
+    if(ProductExist.quantity > 0){
+      setCartItems(cartItems.map((item)=>item.id===product.id ?
+      {...ProductExist, quantity: ProductExist.quantity - 1}: item))
     }
-    else{
-      cartItems.map((item)=> item.id=== product.id ? {...ProductExist, quantity: ProductExist.quantity - 1} : item)
-    }
+
   };
 
+  // Delete cart function
   const handleCartClearance =()=>{
     setCartItems([]);
   }
